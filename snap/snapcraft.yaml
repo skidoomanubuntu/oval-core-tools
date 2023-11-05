@@ -13,12 +13,27 @@ apps:
     command: cvereport.sh
   scan:
     command: bin/snap_manifest.py
+  generate-from-existing-manifests:
+    command: bin/security_scan.py
+    environment:
+      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$PYTHONPATH
+    # PYTHONPATH: $SNAP/usr/lib/python3.8/dist-packages:$SNAP/lib/python3.8/site-packages:$SNAP/usr/lib/python3/dist-packages:$SNAP/lib/python3.8/dist-package/bs4:$SNAP/lib/python3.8/dist-package/bs4/builder:$PYTHONPATH
 
 parts:
   snap-manifests:
     plugin: python
     source: ./snap-manifests
-    python-packages: [pyyaml]
+    #stage-packages: 
+    #      - python3-wheel
+    #    - python3-lxml
+    #    - python3-bs4
+    python-packages: [wheel, pyyaml, bs4, requests, html5lib, lxml]
+  security-scan:
+    plugin: dump
+    source: ./security-scan
+    organize:
+      security_scan.py: bin/security_scan.py
+
   report:
     plugin: dump
     source: ./report
