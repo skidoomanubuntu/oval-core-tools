@@ -379,6 +379,7 @@ def crossReferenceComponents(oscap, pkg):
 '''
 
 if __name__ == "__main__":
+	print ("Security scan executing from %s" % os.getcwd())
 	versions = {'core18':'bionic', 'core20':'focal', 'core22':'jammy', 'snapd':'xenial', 'pc-kernel': 'jammy'}
 	cves = {}
 	maps = {}

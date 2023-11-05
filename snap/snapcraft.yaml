@@ -16,23 +16,33 @@ apps:
   generate-from-existing-manifests:
     command: bin/security_scan.py
     environment:
-      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$PYTHONPATH
-    # PYTHONPATH: $SNAP/usr/lib/python3.8/dist-packages:$SNAP/lib/python3.8/site-packages:$SNAP/usr/lib/python3/dist-packages:$SNAP/lib/python3.8/dist-package/bs4:$SNAP/lib/python3.8/dist-package/bs4/builder:$PYTHONPATH
+      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$SNAP:$PYTHONPATH
+  server:
+    command: bin/launch.sh
+    daemon: simple
+    environment:
+      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$SNAP:$PYTHONPATH
 
 parts:
   snap-manifests:
     plugin: python
     source: ./snap-manifests
-    #stage-packages: 
-    #      - python3-wheel
-    #    - python3-lxml
-    #    - python3-bs4
-    python-packages: [wheel, pyyaml, bs4, requests, html5lib, lxml]
+    python-packages: [wheel, pyyaml, bs4, requests, html5lib, lxml, uvicorn, fastapi]
   security-scan:
     plugin: dump
     source: ./security-scan
     organize:
       security_scan.py: bin/security_scan.py
+  launcher:
+    plugin: dump
+    source: ./bin
+    organize:
+      launch.sh: bin/launch.sh
+  server_info:
+    plugin: dump
+    source: ./app
+    organize:
+      main.py: app/main.py
 
   report:
     plugin: dump
