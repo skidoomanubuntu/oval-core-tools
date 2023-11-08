@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 import os, subprocess, time, json
 
 app = FastAPI()
@@ -35,4 +36,22 @@ def index():
     print ('now executing in %s' % os.getcwd())
     if needToRefresh:
         subprocess.Popen(['python3', '%s/bin/security_scan.py' % os.getenv('SNAP')])
-    return json.dumps(dict)
+        return "REFRESHING"
+    return "OK"
+
+@app.get("/usn")
+def usn():
+    if not os.path.isfile("usn_stats.php"):
+        return "BEING GENERATED"
+    with open("usn_stats.php", "r") as myFile:
+        contents = myFile.read()
+        print ('CONTENTS: %s' % contents)
+        return Response(content=contents)
+
+@app.get("/cve")
+def cve():
+    if not os.path.isfile("cve_stats.php"):
+        return "BEING GENERATED"
+    with open("cve_stats.php", "r") as myFile:
+        contents = myFile.read()
+        return Response(content=contents, status_code=200)
