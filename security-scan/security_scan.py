@@ -202,8 +202,8 @@ def generateCVEStats(relevant_cves, cve_info, filename):
 		htmlFile.write('      <th><h3>Critical</h3></th><th><h3>High</h3></th><th><h3>Medium</h3></th><th><h3>Low</h3></th>\n')
 		htmlFile.write('   </tr></thead>\n')
 		htmlFile.write('   <tbody><tr>\n')
-		htmlFile.write('   <td align="center"><h3>%s</h3></td><td align="center"><h3>%s</h3></td><td align="center"><h3>%s</h3></td><td align="center><h3>%s</h3></td>' % (severity_stats['critical'], severity_stats['high'], severity_stats['medium'], severity_stats['low'], severity_stats['negligible']))
-		htmlFile.write('</tbody></table></td></tr>')
+		htmlFile.write('   <td align="center"><h3>%s</h3></td><td align="center"><h3>%s</h3></td><td align="center"><h3>%s</h3></td><td align="center"><h3>%s</h3></td>' % (severity_stats['critical'], severity_stats['high'], severity_stats['medium'], severity_stats['low']))
+		htmlFile.write('</tr></tbody></table></td></tr>')
 		htmlFile.write('<tr><td colspan="6" style="background-color: #111;" width="100%"><h3><center>Last updated on ' + datetime.now().strftime("%Y-%m-%d %H:%M") + '</center></h3></td></tr></table>' )
 		
 		'''htmlFile.write('<table border="0" width="100%" padding="3" spacing="10">\n')
