@@ -437,6 +437,12 @@ if __name__ == "__main__":
 		cves = analyzeCVEFile("com.ubuntu.%s.cve.oval.xml" % versions[version], cves)
 		print (cves)
 		# First, make sure that the right manifest file gets copied as manifest
+
+		# First jump over any versions we do not need
+		if not os.path.exists('manifest.%s' % version):
+			print ('Version %s not present, continuing' % version)
+			continue
+
 		shutil.copy('manifest.%s' % version, 'manifest')
 		
 		# Run the oscap tool
